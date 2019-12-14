@@ -42,7 +42,7 @@ class GCN(nn.Module):
     def forward(self, G, feat):
         feat = feat.view(feat.shape[0] * 15, feat.shape[2], feat.shape[3], feat.shape[4])
         h = self.resnet(feat.permute(0,3,1,2))
-        h = h.view(15, -1, h.shape[1])
+        h = h.view(-1, 15, h.shape[1]).permute(1,0,2)
         h = self.gcn1(G, h)
         h = h.permute(1,2,0)
         h = self.norm1(h)

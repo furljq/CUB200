@@ -4,10 +4,11 @@ import torch
 
 class cropCUB:
 
-    def __init__(self, mode='train'):
+    def __init__(self, mode='train', augment=True):
         f = open('./CUB_200_2011/train_test_split.txt', 'r')
         l = open('./CUB_200_2011/image_class_labels.txt', 'r')
         self.mode = mode
+        self.augment = augment
         data = []
         label = []
         while True:
@@ -41,7 +42,7 @@ class cropCUB:
         return torch.Tensor(d), self.label[index]
     
     def __len__(self):
-        if self.mode == 'train':
+        if self.mode == 'train' and self.augment:
             return len(self.inputs) * 2
         else:
             return len(self.inputs)

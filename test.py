@@ -8,7 +8,7 @@ dataloader = torch.utils.data.DataLoader(testset, batch_size=8, shuffle=False, n
 
 net = GCN(200, 500, 200)
 G = build_graph()
-ckpt = torch.load('../ckpt/model_1.ckpt')
+ckpt = torch.load('./ckpt/model_1.ckpt')
 net.load_state_dict(ckpt['net_state_dict'])
 net = net.cuda()
 net = torch.nn.DataParallel(net)
