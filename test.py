@@ -3,12 +3,12 @@ import torch
 from graph import build_graph
 from model import GCN
 
-testset = cropCUB('test', False)
+testset = cropCUB('train', False)
 dataloader = torch.utils.data.DataLoader(testset, batch_size=8, shuffle=False, num_workers=4)
 
 net = GCN(200, 500, 200)
 G = build_graph()
-ckpt = torch.load('./ckpt/model_19.ckpt')
+ckpt = torch.load('./ckpt/model_20.ckpt')
 net.load_state_dict(ckpt['net_state_dict'])
 net = net.cuda()
 net = torch.nn.DataParallel(net)
@@ -33,4 +33,4 @@ for i, (inputs, labels) in enumerate(dataloader):
         test_loss += loss.item() * batch_size
         test_correct += torch.sum(predict.data == labels.data)
 
-print('total, acc: {:.3f}, loss: {:.3f}'.format(i, len(dataloader), float(test_correct) / total, test_loss / total))
+print('total, acc: {:.3f}, loss: {:.3f}'.format(float(test_correct) / total, test_loss / total))

@@ -2,7 +2,7 @@ import numpy as np
 import torch
 import torch.nn.functional as F
 from model import GCN
-from graph import build_graph
+from graph import build_graph_skeleton as build_graph
 from dataLoader import cropCUB
 
 G = build_graph()
@@ -37,5 +37,5 @@ for epoch in range(start_epoch, 80):
     epoch_loss /= (iter + 1)
     print('Epoch {}, loss {:.4f}'.format(epoch, epoch_loss))
     epoch_losses.append(epoch_loss)
-    torch.save({'epoch':epoch, 'net_state_dict':net.state_dict(), 'optimizer':optimizer}, './ckpt/model_{}.ckpt'.format(epoch))
+    torch.save({'epoch':epoch, 'net_state_dict':net.state_dict(), 'optimizer':optimizer}, './ckpt/skeleton_{}.ckpt'.format(epoch))
 
