@@ -34,12 +34,14 @@ class cropCUB:
         index = index % len(self.inputs)
         image_id = self.inputs[index]
         d = []
+        mask = []
         for p in range(15):
-            crop = self.dataCropper.crop(image_id, p)
+            crop, visible = self.dataCropper.crop(image_id, p)
             if aug:
                 crop = cv2.flip(crop, 1)
             d.append(crop)
-        return torch.Tensor(d), self.label[index]
+            mask.append(visible)
+        return torch.Tensor(d), mask, self.label[index]
     
     def __len__(self):
         if self.mode == 'train' and self.augment:

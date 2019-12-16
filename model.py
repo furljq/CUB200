@@ -41,10 +41,11 @@ class GCN(nn.Module):
         self.dropout2 = nn.Dropout(0.7)
         self.classifier = nn.Linear(hidden_size, num_classes)
 
-    def forward(self, G, feat):
+    def forward(self, G, mask, feat):
         feat = feat.view(feat.shape[0] * 15, feat.shape[2], feat.shape[3], feat.shape[4])
         h = self.resnet(feat.permute(0,3,1,2))
         h = h.view(-1, 15, h.shape[1]).permute(1,0,2)
+        h[~mask] = torch.zeros(h.shape[2])
         h = self.gcn1(G, h)
         h = h.permute(1,2,0)
         h = self.norm1(h)

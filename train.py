@@ -2,7 +2,7 @@ import numpy as np
 import torch
 import torch.nn.functional as F
 from model import GCN
-from graph import build_graph_skeleton as build_graph
+from graph import build_graph_fc as build_graph
 from dataLoader import cropCUB
 
 G = build_graph()
@@ -23,10 +23,10 @@ optimizer = torch.optim.SGD(net.parameters(), lr=1e-2, momentum=0.9, weight_deca
 epoch_losses = []
 for epoch in range(start_epoch, 80):
     epoch_loss = 0
-    for iter, (inputs, labels) in enumerate(dataLoader):
+    for iter, (inputs, mask, labels) in enumerate(dataLoader):
         inputs = inputs.cuda(0)
         labels = labels.cuda(0)
-        prediction = net(G, inputs)
+        prediction = net(G, mask, inputs)
         loss = F.cross_entropy(prediction, labels)
         optimizer.zero_grad()
         loss.backward()
@@ -37,5 +37,5 @@ for epoch in range(start_epoch, 80):
     epoch_loss /= (iter + 1)
     print('Epoch {}, loss {:.4f}'.format(epoch, epoch_loss))
     epoch_losses.append(epoch_loss)
-    torch.save({'epoch':epoch, 'net_state_dict':net.state_dict(), 'optimizer':optimizer}, './ckpt/skeleton_{}.ckpt'.format(epoch))
+    torch.save({'epoch':epoch, 'net_state_dict':net.state_dict(), 'optimizer':optimizer}, './ckpt/invisible_fc_{}.ckpt'.format(epoch))
 

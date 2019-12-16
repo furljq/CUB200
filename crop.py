@@ -63,7 +63,7 @@ class cropper:
 	def crop(self, image_id, part_id):
 		part_appear = self.part_appear[image_id, part_id]
 		if not part_appear:
-			return np.zeros((224, 224, 3))
+			return np.zeros((224, 224, 3)), False
 		img = cv2.imread('./CUB_200_2011/images/'+self.image_dirs[image_id])
 		x, y = self.part_locs[image_id, part_id]
 		body_len = self.get_body_len(self.part_locs[image_id])
@@ -74,12 +74,7 @@ class cropper:
 		xl, xr = self.shift(xl, xr, img_size[0])
 		yl, yr = self.shift(yl, yr, img_size[1])
 		subimg = img[xl:xr, yl:yr, :]
-		#cv2.imshow("Image", img)
-		#cv2.imshow(self.parts[part_id], subimg)
-		#cv2.waitKey(10000)
-		#cv2.imwrite('subimg.png', subimg)
-		#cv2.imwrite('img.png', img)
-		return cv2.resize(subimg, (224, 224))
+		return cv2.resize(subimg, (224, 224)), True
 
 	def draw_skeleton(self, image_id):
 		img = cv2.imread('./CUB_200_2011/images/'+self.image_dirs[image_id])
