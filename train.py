@@ -9,7 +9,7 @@ CD = True
 
 G = build_graph()
 
-net = GCN(2048, 200, 200)
+net = GCN(2048, [1024, 512] , 200)
 if CD:
     net = net.cuda(0)
 
@@ -47,5 +47,5 @@ for epoch in range(start_epoch, 201):
     correct = float(correct) / ((iter + 1) * batch_size)
     print('Epoch {}, loss {:.4f}, acc {:.4f}'.format(epoch, epoch_loss, correct))
     if epoch % 10 == 0:
-        torch.save({'epoch':epoch, 'net_state_dict':net.state_dict(), 'optimizer':optimizer}, './ckpt/fast_{}_{:.4f}_{:.4f}.ckpt'.format(epoch, correct, epoch_loss))
+        torch.save({'epoch':epoch, 'net_state_dict':net.state_dict(), 'optimizer':optimizer}, './ckpt/fast_skeleton_{}_{:.4f}_{:.4f}.ckpt'.format(epoch, correct, epoch_loss))
 
