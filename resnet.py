@@ -150,7 +150,7 @@ class ResNet(nn.Module):
         feature2 = x
         x = self.fc(x)
 
-        return x
+        return feature1, x
 
 
 def resnet18(pretrained=False, **kwargs):

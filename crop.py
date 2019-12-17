@@ -76,6 +76,24 @@ class cropper:
 		subimg = img[xl:xr, yl:yr, :]
 		return cv2.resize(subimg, (224, 224)), True
 
+	def divide(self, image_id):
+		division = []
+		img = cv2.imread('./CUB_200_2011/images/'+self.image_dirs[image_id])
+		x_part = img.shape[0] / 7
+		y_part = img.shape[1] / 7
+		for i in range(self.num_parts):
+			part_appear = self.part_appear[image_id, i]
+			if not part_appear:
+				division.append([4,4])
+			else:
+				y, x = self.part_locs[image_id, i]
+				x, y = x // x_part, y // y_part
+				x, y = min(x, 6), min(y, 6)
+				x, y = max(x, 0), max(y, 0)
+				division.append([x, y])
+                
+		return cv2.resize(img, (224, 224)), division
+
 	def draw_skeleton(self, image_id):
 		img = cv2.imread('./CUB_200_2011/images/'+self.image_dirs[image_id])
 		for j in range(self.num_parts):
