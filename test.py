@@ -1,14 +1,14 @@
-from dataLoader import cropCUB
+from dataLoader import cropCUB as CUB
 import torch
 from graph import build_graph_skeleton as build_graph
-from model import GCN
+from model import GCN as GCN
 
-testset = cropCUB('test', False)
+testset = CUB('test', False)
 dataloader = torch.utils.data.DataLoader(testset, batch_size=8, shuffle=False, num_workers=4)
 
-net = GCN(200, 500, 200)
+net = GCN(2048, [1024, 512], 200)
 G = build_graph()
-ckpt = torch.load('./ckpt/skeleton_18.ckpt')
+ckpt = torch.load('./ckpt/early_skeleton_55.ckpt')
 net.load_state_dict(ckpt['net_state_dict'])
 net = net.cuda()
 net = torch.nn.DataParallel(net)
@@ -27,7 +27,7 @@ for i, (inputs, mask, labels) in enumerate(dataloader):
         mask = mask.cuda()
         labels = labels.cuda()
         batch_size = inputs.size(0)
-        prediction = net(G, mask, inputs)
+        prediction = net(G, inputs, mask)
         loss = creterion(prediction, labels)
         _, predict = torch.max(prediction, 1)
         total += batch_size
