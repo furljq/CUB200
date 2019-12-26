@@ -15,8 +15,8 @@ if CD:
 
 batch_size = 8
 start_epoch = 0
-if False:
-    ckpt = torch.load('./ckpt/skeleton_18.ckpt')
+if True:
+    ckpt = torch.load('/Disk5/junqi/CUB/early_skeleton_93.ckpt')
     net.load_state_dict(ckpt['net_state_dict'])
     start_epoch = ckpt['epoch'] + 1
 
@@ -47,5 +47,5 @@ for epoch in range(start_epoch, 201):
     correct = float(correct) / ((iter + 1) * batch_size)
     print('Epoch {}, loss {:.4f}, acc {:.4f}'.format(epoch, epoch_loss, correct))
     if epoch % 1 == 0:
-        torch.save({'epoch':epoch, 'net_state_dict':net.state_dict(), 'optimizer':optimizer}, './ckpt/early_skeleton_{}_{:.4f}_{:.4f}.ckpt'.format(epoch, correct, epoch_loss))
+        torch.save({'epoch':epoch, 'net_state_dict':net.state_dict(), 'optimizer':optimizer}, '/Disk5/junqi/CUB/early_skeleton_{}_{:.4f}_{:.4f}.ckpt'.format(epoch, correct, epoch_loss))
 

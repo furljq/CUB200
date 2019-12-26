@@ -5,7 +5,7 @@ resnet
 after 40 epochs training get acc 67.3% on test set
 after 60 epochs training get acc 70.6% on test set
 after 80 epochs training get acc 73.7% on test set
-after 100 epochs training get acc 74.0% on test set
+after 100 epochs training get acc 74.0% on test set *
 after 120 epochs training get acc 71.3% on test set
 
 skeleton
@@ -26,7 +26,7 @@ after 20 epochs training get acc 65.2% on test set
 after 20 epochs training get acc 60.0% on test set
 after 22 epochs training get acc 65.2% on test set
 after 23 epochs training get acc 64.8% on test set
-after 24 epochs training get acc 69.2% on test set *
+after 24 epochs training get acc 69.2% on test set
 after 25 epochs training get acc 64.4% on test set
 after 26 epochs training get acc 65.6% on test set
 after 28 epochs training get acc 61.2% on test set
@@ -42,5 +42,21 @@ after 42 epochs training get acc 66.9% on test set
 after 44 epochs training get acc 66.7% on test set
 after 50 epochs training get acc 65.8% on test set
 after 55 epochs training get acc 66.8% on test set
+after 60 epochs training get acc 66.0% on test set
+after 65 epochs training get acc 67.9% on test set
+after 70 epochs training get acc 67.9% on test set
+after 75 epochs training get acc 68.5% on test set
+after 80 epochs training get acc 64.8% on test set
+after 85 epochs training get acc 63.9% on test set
+after 90 epochs training get acc 69.8% on test set
+after 92 epochs training get acc 69.8% on test set
+after 93 epochs training get acc 71.1% on test set
+after 94 epochs training get acc 71.9% on test set
+after 100 epochs training get acc 75.3% on test set
+after 105 epochs training get acc 75.1% on test set
+after 108 epochs training get acc 75.4% on test set *
+after 110 epochs training get acc 75.0% on test set
 
+fusion
 
+resnet 100 + early skeleton 100 = 81.9%
